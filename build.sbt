@@ -13,7 +13,7 @@ val akkaDeps = Seq(
   akkaOrg %% "akka-agent"           % akkaVersion,
   akkaOrg %% "akka-stream"          % akkaVersion,
   akkaOrg %% "akka-stream-testkit"  % akkaVersion  % "test",
-  akkaOrg %% "akka-http"    % "10.0.10",
+  akkaOrg %% "akka-http"            % "10.1.0",
   akkaOrg %% "akka-testkit"         % akkaVersion  % "test"
 )
 

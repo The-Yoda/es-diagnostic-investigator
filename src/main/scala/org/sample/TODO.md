@@ -2,8 +2,7 @@ Things to do with slow logs:
 ---------------------------
  - Ability to pump to es, either embedded one created temporarily or with given input url, for analysing the data runtime
  - Give top n results based on latency, time range, nested aggregations
- - Query text size calculation
- - Unique query calculation
+ - Time range calculation
  - Ability to get input of timezone which the logs are in, defaulting to current timezone
   
 
