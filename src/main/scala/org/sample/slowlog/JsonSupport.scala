@@ -1,4 +1,4 @@
-package org.sample
+package org.sample.slowlog
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import org.json4s.jackson.{JsonMethods, Serialization}
@@ -13,8 +13,7 @@ object JsonSupport {
 
   implicit val formats = DefaultFormats
 
-  implicit class EnrichedMap[A, B](tuples: TraversableOnce[(A, B)])
-                              (implicit ordering: Ordering[A]) {
+  implicit class EnrichedMap[A, B](map: scala.collection.Map[A, B]) {
 
     def fromJSON(json: String): Map[String, Any] = Option(json).filter(_.nonEmpty).map(json =>
       try getMap(JsonMethods.parse(json, useBigDecimalForDouble = false, useBigIntForLong = false).values)
@@ -28,11 +27,11 @@ object JsonSupport {
       case _            => Map("collection" -> parsed)
     }
 
-    def toJSON: String = Serialization.write(tuples.asInstanceOf[Map[A, B]])
+    def toJSON: String = Serialization.write(map)
 
-    def toSortedMap: SortedMap[A, _] = SortedMap(tuples.toMap.mapValues(toSorted).toSeq: _*)
+    def toSortedMap(implicit ordering: Ordering[A]): SortedMap[A, _] = SortedMap(map.mapValues(toSorted).toSeq: _*)
 
-    val toSorted: PartialFunction[Any, Any] = {
+    private def toSorted(implicit ordering: Ordering[A]): PartialFunction[Any, Any] = {
       case mp: Map[A, _] => SortedMap(mp.mapValues(toSorted).toSeq: _*)
       case lst: List[_]  => lst.map(toSorted)
       case v             => v

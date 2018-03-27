@@ -4,8 +4,9 @@ scalaVersion := "2.12.4"
 val akkaVersion = "2.5.11"
 val akkaOrg = "com.typesafe.akka"
 
-resolvers ++= Seq("Akka Snapshots" at "https://repo.akka.io/snapshots/",
-              "Akka releases" at  "http://repo.typesafe.com/typesafe/releases") ++ Seq(Opts.resolver.sonatypeReleases)
+resolvers ++= Seq("Akka Snapshots"  at "https://repo.akka.io/snapshots/",
+              "Akka releases"       at  "http://repo.typesafe.com/typesafe/releases",
+              "ES Releases"         at "https://maven.elasticsearch.org/releases") ++ Seq(Opts.resolver.sonatypeReleases)
 
 val akkaDeps = Seq(
   akkaOrg %% "akka-actor"           % akkaVersion,
@@ -23,6 +24,7 @@ val commonDeps = Seq(
   "org.scalatest"     %% "scalatest"            % "3.0.0"             % "test",
   "org.apache.avro"    % "avro"                 % "1.8.0",
   "joda-time"          % "joda-time"            % "2.7",
+  "org.elasticsearch"  % "elasticsearch"        % "6.2.0",
   "org.slf4j"          % "slf4j-simple"         % "1.7.25"
 )
 
