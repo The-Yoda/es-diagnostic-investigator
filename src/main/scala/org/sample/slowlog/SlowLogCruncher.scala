@@ -23,7 +23,7 @@ object SlowLogCruncher {
     .map {
       p =>
         val rawQuery = p.group(8)
-        val query = Map().fromJSON(p.group(8)).toSortedMap
+        val query = Map().fromJSON(p.group(8))
         val queriedTime = formatTimestamp(p.group(1), tz)
 
         SortedMap("timestamp" -> queriedTime.toDateTime(DateTimeZone.UTC).toString, "node" -> p.group(2),

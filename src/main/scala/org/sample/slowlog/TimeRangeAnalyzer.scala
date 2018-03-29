@@ -8,7 +8,6 @@ import org.joda.time.DateTimeZone
 import org.sample.slowlog.JsonSupport.EnrichedMap
 import org.slf4j.LoggerFactory
 
-import scala.collection.SortedMap
 import scala.util.control.NonFatal
 
 /**
@@ -18,8 +17,8 @@ import scala.util.control.NonFatal
 object TimeRangeAnalyzer {
 
   private val logger = LoggerFactory.getLogger(getClass)
-  type MAP = SortedMap[String, Any]
-  type MAPUNTYPED = SortedMap[_, _]
+  type MAP = Map[String, Any]
+  type MAPUNTYPED = Map[_, _]
 
   private val gts = List("gt", "gte")
   private val lts = List("lt", "lte")
@@ -31,7 +30,8 @@ object TimeRangeAnalyzer {
 
   /**
     * Get max time range in seconds
-    * @param query Actual query
+    *
+    * @param query       Actual query
     * @param queriedTime Time the query was executed. It is now taken from slow log
     * @return
     */
