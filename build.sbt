@@ -1,6 +1,8 @@
 name := "es-diagnostics-investigator"
 
 scalaVersion := "2.12.4"
+version := "0.0.1"
+
 val akkaVersion = "2.5.11"
 val akkaOrg = "com.typesafe.akka"
 
@@ -30,7 +32,6 @@ val commonDeps = Seq(
 
 libraryDependencies ++= akkaDeps ++ commonDeps
 
-//fork in run := true
 mainClass in(Compile, run) := Some("org.sample.Main")
 
 logBuffered in Test := false
