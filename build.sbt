@@ -27,6 +27,7 @@ val commonDeps = Seq(
   "org.apache.avro"    % "avro"                 % "1.8.0",
   "joda-time"          % "joda-time"            % "2.7",
   "org.elasticsearch"  % "elasticsearch"        % "6.2.0",
+  "org.elasticsearch.plugin" % "transport-netty4-client" % "6.2.0",
   "org.slf4j"          % "slf4j-simple"         % "1.7.25"
 )
 
