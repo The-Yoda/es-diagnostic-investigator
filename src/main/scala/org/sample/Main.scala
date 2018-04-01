@@ -5,6 +5,6 @@ import org.sample.slowlog.SlowLogsAnalyzer
 
 object Main extends App {
   val timeZone = DateTimeZone.forID("America/Los_Angeles").getID
-  val slowLogFile = "/Users/sujeeva/Desktop/slowlogs/slowlogs.log"
+  val slowLogFile = "/Users/sujeeva/Desktop/slowlogs/slowlog.log"
   SlowLogsAnalyzer.analyze(timeZone, slowLogFile)
 }
