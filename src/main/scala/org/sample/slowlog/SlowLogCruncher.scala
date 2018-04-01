@@ -26,7 +26,7 @@ object SlowLogCruncher {
         val query = Map().fromJSON(p.group(8))
         val queriedTime = formatTimestamp(p.group(1), tz)
 
-        SortedMap("timestamp" -> queriedTime.toDateTime(DateTimeZone.UTC).toString, "node" -> p.group(2),
+        Map("timestamp" -> queriedTime.toDateTime(DateTimeZone.UTC).toString, "node" -> p.group(2),
           "index" -> p.group(3), "shard_id" -> p.group(4), "latency" -> p.group(5).toLong, "search_type" -> p.group(6),
           "total_shards" -> p.group(7), "query" -> query.toJSON, "signature" -> getQuerySignature(rawQuery),
           "size" -> rawQuery.size, "timerange" -> TimeRangeAnalyzer.getMaxTimeRange(query, queriedTime.getMillis),
@@ -52,9 +52,12 @@ object SlowLogCruncher {
     case v@_                       => v.getClass.getSimpleName
   }
 
-  def getAggregationLevels(query: MAP): Int = query.map {
-    case (k, v) if k.equals("aggs") && v.isInstanceOf[MAP] => 1 + getAggregationLevels(v.asInstanceOf[MAP])
-    case (_, v) if v.isInstanceOf[MAP]                     => getAggregationLevels(v.asInstanceOf[MAP])
-    case _                                                 => 0
-  }.max
+  def getAggregationLevels(query: MAP): Int = {
+    val nestedSizes = query.map {
+      case (k, v) if k.equals("aggs") && v.isInstanceOf[MAP] => 1 + getAggregationLevels(v.asInstanceOf[MAP])
+      case (_, v) if v.isInstanceOf[MAP]                     => getAggregationLevels(v.asInstanceOf[MAP])
+      case _                                                 => 0
+    }.toList
+    if (nestedSizes.isEmpty) 0 else nestedSizes.max
+  }
 }
