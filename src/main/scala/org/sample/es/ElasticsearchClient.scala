@@ -1,4 +1,4 @@
-package org.sample
+package org.sample.es
 
 import java.util.{Arrays, Collection}
 

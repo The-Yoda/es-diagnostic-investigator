@@ -1,7 +1,7 @@
 package org.sample
 
 import org.joda.time.DateTimeZone
-import org.sample.ElasticsearchClient._
+import org.sample.es.ElasticsearchClient._
 import org.sample.slowlog.SlowLogsAnalyzer
 
 import scala.concurrent.ExecutionContext.Implicits.global
