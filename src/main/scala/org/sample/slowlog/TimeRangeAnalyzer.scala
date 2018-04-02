@@ -17,8 +17,7 @@ import scala.util.control.NonFatal
 object TimeRangeAnalyzer {
 
   private val logger = LoggerFactory.getLogger(getClass)
-  type MAP = Map[String, Any]
-  type MAPUNTYPED = Map[_, _]
+  import GenericTypes._
 
   private val gts = List("gt", "gte")
   private val lts = List("lt", "lte")

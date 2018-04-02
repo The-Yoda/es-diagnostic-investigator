@@ -18,7 +18,7 @@ class SlowLogCruncherSpec extends WordSpecLike with Matchers {
     "get time range for given format" in {
       val slowLog = """[2017-11-23 00:00:00,392][WARN ][index.search.slowlog.query] [machine1-data01] [log-2017-10-25][0] took[17.5ms], took_millis[17], types[logs], stats[], search_type[QUERY_THEN_FETCH], total_shards[2400], source[{"from":0,"size":2000,"query":{"filtered":{"filter":{"bool":{"must":[{"range":{"timestamp":{"gte":"2017-11-22T08:00:00.006Z","lt":"2017-11-23T08:00:00.006Z"}}}]}}}}}], extra_source[],"""
 
-      val x = Source.single(slowLog).via(SlowLogCruncher.transform(DateTimeZone.UTC.getID))
+      val x = Source.single(slowLog).via(SlowLogCruncher.crunchData(DateTimeZone.UTC.getID))
         .runWith(TestSink.probe[Map[String, Any]])
         .request(1)
         .expectNext()

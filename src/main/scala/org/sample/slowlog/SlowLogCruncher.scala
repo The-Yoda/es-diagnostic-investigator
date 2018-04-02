@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 import akka.stream.scaladsl.Flow
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
+import org.sample.slowlog.GenericTypes.MAP
 import org.sample.slowlog.JsonSupport.EnrichedMap
 
 import scala.collection.SortedMap
@@ -12,11 +13,10 @@ import scala.util.hashing.MurmurHash3.stringHash
 
 object SlowLogCruncher {
 
-  type MAP = Map[String, Any]
   private val SlowLogPattern = Pattern.compile("""\[([0-9- :,]*)\]\[.+?\]\[.+?\] \[(.+?)\] \[(.+?)\]\[(.+?)\] took\[.+?\], took_millis\[(.+?)\],.*search_type\[(.+?)\], total_shards\[(.+?)\], source\[(.*)\], extra_source\[(.*)\],\s*""")
   private val SlowLogDatePattern = "yyyy-MM-dd HH:mm:ss,SSS"
 
-  def transform(tz: String) = Flow[String]
+  def crunchData(tz: String) = Flow[String]
     .filter(_.contains("index.search.slowlog.query"))
     .map(SlowLogPattern.matcher)
     .filter(_.matches())
