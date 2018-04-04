@@ -42,7 +42,7 @@ object ElasticsearchClient {
     val settings = Settings.builder.put("transport.type", "netty4")
       .put("http.type", "netty4")
       .put("http.enabled", "true")
-      .put("path.data", dataDir.toString)
+      .put("path.data", dir.toString)
       .put("path.home", "elasticsearch-data")
       .put("http.port", port)
       .put("transport.tcp.port", port + 1)
