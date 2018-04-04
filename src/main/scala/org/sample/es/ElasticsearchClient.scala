@@ -7,13 +7,18 @@ import org.elasticsearch.node.InternalSettingsPreparer.{prepareEnvironment => en
 import org.elasticsearch.node.Node
 import org.elasticsearch.plugins.Plugin
 import org.elasticsearch.transport.Netty4Plugin
+import org.slf4j.LoggerFactory
 
 class MyNode(settings: Settings, plugins: Collection[Class[_ <: Plugin]]) extends Node(env(settings, null), plugins) {}
 
 object ElasticsearchClient {
+  val logger = LoggerFactory.getLogger(getClass)
+
   private var node: Option[MyNode] = None
 
   def startEmbeddedElasticSearch(port: Int) = {
+    logger.info(s"Starting embedded elasticsearch with port $port")
+    
     val settings = Settings.builder.put("transport.type", "netty4")
       .put("http.type", "netty4")
       .put("http.enabled", "true")
@@ -25,5 +30,8 @@ object ElasticsearchClient {
     node.get.start()
   }
 
-  def stopEmbeddedElasticSearch(): Unit = node.foreach(_.close())
+  def stopEmbeddedElasticSearch(): Unit = {
+    node.foreach(_.close())
+    node = None
+  }
 }
