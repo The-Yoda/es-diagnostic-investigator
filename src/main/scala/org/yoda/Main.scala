@@ -12,10 +12,9 @@ case class Config(slowLogLocation: String = "", esBaseUrl: String = "", timeZone
 
 object Main extends App {
 
-  private val EmbeddedESPort = 6393
-  private val EmbeddedESUrl = s"http://localhost:$EmbeddedESPort"
-
   override def main(args: Array[String]): Unit = {
+    val EmbeddedESPort = 6393
+    val EmbeddedESUrl = s"http://localhost:$EmbeddedESPort"
     try {
       val config = ArgParser.parse(args)
 
@@ -32,7 +31,7 @@ object Main extends App {
       }
 
       analyzed.onComplete { _ =>
-        stopEmbeddedElasticSearch()
+        stopEmbeddedElasticSearch(EmbeddedESPort)
         Commons.system.terminate()
       }
 

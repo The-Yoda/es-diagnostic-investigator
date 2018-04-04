@@ -30,12 +30,13 @@ val commonDeps = Seq(
   "org.elasticsearch"          % "elasticsearch"            % "6.2.0",
   "org.elasticsearch.plugin"   % "transport-netty4-client"  % "6.2.0",
   "com.github.scopt"          %% "scopt"                    % "3.7.0",
+  "org.apache.commons"         % "commons-io"               % "1.3.2",
   "org.slf4j"                  % "slf4j-simple"             % "1.7.25"
 )
 
 libraryDependencies ++= akkaDeps ++ commonDeps
 
-mainClass in(Compile, run) := Some("org.sample.Main")
+mainClass in(Compile, run) := Some("org.yoda.Main")
 
 logBuffered in Test := false
 

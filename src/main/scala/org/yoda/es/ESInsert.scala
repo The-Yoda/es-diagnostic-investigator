@@ -16,8 +16,7 @@ object ESInsert {
 
   import system.dispatcher
 
-  private val NDJson = "application/x-ndjson"
-  private val contentType: ContentType = ContentType.parse(NDJson).toOption.get
+  private val contentType: ContentType = ContentType.parse("application/x-ndjson").toOption.get
   private val http = Http()
 
   def insertJSON(esEndpoint: String): Flow[Seq[MAP], List[Long], NotUsed] = {
