@@ -11,3 +11,12 @@ Analysing the report and identifying the root cause(or probable root cause) of t
 ## Getting Started
 ### Setting up
 ### Samples
+ 
+Running with sbt:
+ 
+ `sbt "runMain org.sample.Main -l /Users/jeeva/Desktop/slowlogs/slowlog.log -u http://localhost:9200 -t US/Arizona"`
+ 
+In sbt shell:
+  
+  sbt> `run  -l "/Users/sujeeva/Desktop/slowlogs/slowlog.log" -u "http://localhost:9200" -t "US/Arizona"`
+ 
