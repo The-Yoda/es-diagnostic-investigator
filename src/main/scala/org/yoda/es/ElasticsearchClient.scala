@@ -1,4 +1,4 @@
-package org.sample.es
+package org.yoda.es
 
 import java.util.{Arrays, Collection}
 

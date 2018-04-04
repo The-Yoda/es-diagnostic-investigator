@@ -1,11 +1,11 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 import java.util.Locale
 import java.util.function.LongSupplier
 
 import org.elasticsearch.common.joda.{DateMathParser, Joda}
 import org.joda.time.DateTimeZone
-import org.sample.slowlog.JsonSupport.EnrichedMap
+import org.yoda.slowlog.JsonSupport.EnrichedMap
 import org.slf4j.LoggerFactory
 
 import scala.util.control.NonFatal

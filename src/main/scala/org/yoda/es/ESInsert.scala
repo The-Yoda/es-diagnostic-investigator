@@ -1,4 +1,4 @@
-package org.sample.es
+package org.yoda.es
 
 import akka.NotUsed
 import akka.http.scaladsl.Http
@@ -6,9 +6,9 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.http.scaladsl.util.FastFuture.EnhancedFuture
 import akka.stream.scaladsl.Flow
-import org.sample.Commons._
-import org.sample.slowlog.GenericTypes.MAP
-import org.sample.slowlog.JsonSupport.EnrichedMap
+import org.yoda.Commons._
+import org.yoda.slowlog.GenericTypes.MAP
+import org.yoda.slowlog.JsonSupport.EnrichedMap
 
 import scala.concurrent.Future
 

@@ -1,4 +1,4 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import org.json4s.jackson.{JsonMethods, Serialization}

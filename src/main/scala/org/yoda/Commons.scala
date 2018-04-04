@@ -1,4 +1,4 @@
-package org.sample
+package org.yoda
 
 import akka.actor.ActorSystem
 import akka.stream.Supervision.Resume

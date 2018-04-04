@@ -1,12 +1,12 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 import java.util.regex.Pattern
 
 import akka.stream.scaladsl.Flow
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import org.sample.slowlog.GenericTypes.MAP
-import org.sample.slowlog.JsonSupport.EnrichedMap
+import org.yoda.slowlog.GenericTypes.MAP
+import org.yoda.slowlog.JsonSupport.EnrichedMap
 
 import scala.collection.SortedMap
 import scala.util.hashing.MurmurHash3.stringHash

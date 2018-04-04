@@ -1,6 +1,6 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
-import org.sample.slowlog.JsonSupport.EnrichedMap
+import org.yoda.slowlog.JsonSupport.EnrichedMap
 import org.scalatest.{Matchers, WordSpecLike}
 
 class JsonSupportSpec extends WordSpecLike with Matchers {

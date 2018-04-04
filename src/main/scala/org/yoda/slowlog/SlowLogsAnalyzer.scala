@@ -1,10 +1,10 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 import java.io.File
 
 import akka.stream.scaladsl.{Sink, Source}
-import org.sample.Commons._
-import org.sample.es.ESInsert
+import org.yoda.Commons._
+import org.yoda.es.ESInsert
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.Future

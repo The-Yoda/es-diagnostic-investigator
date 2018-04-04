@@ -1,11 +1,11 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import org.joda.time.DateTimeZone
-import org.sample.slowlog.JsonSupport._
+import org.yoda.slowlog.JsonSupport._
 import org.scalatest.{Matchers, WordSpecLike}
 
 class SlowLogCruncherSpec extends WordSpecLike with Matchers {

@@ -1,4 +1,4 @@
-package org.sample.slowlog
+package org.yoda.slowlog
 
 object GenericTypes {
   type MAP = Map[String, Any]

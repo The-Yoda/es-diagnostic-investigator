@@ -1,4 +1,4 @@
-package org.sample
+package org.yoda
 
 import org.joda.time.DateTimeZone
 
