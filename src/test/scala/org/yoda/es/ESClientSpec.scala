@@ -11,7 +11,7 @@ import org.yoda.Commons._
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class ESInsertSpec extends WordSpecLike with Matchers with BeforeAndAfterAll {
+class ESClientSpec extends WordSpecLike with Matchers with BeforeAndAfterAll {
 
   import system.dispatcher
 
@@ -28,8 +28,8 @@ class ESInsertSpec extends WordSpecLike with Matchers with BeforeAndAfterAll {
   val url = s"http://localhost:$Port"
   "ESInsert" should {
     "send es request and parse response" in {
-      Source.single(List(Map("a" -> "b"), Map("b" -> "c")))
-        .via(ESInsert.insertJSON(s"http://localhost:$Port"))
+      Source.fromIterator(() => List(Map("a" -> "b"), Map("b" -> "c")).toIterator)
+        .via(ESClient.insertData(s"http://localhost:$Port"))
         .runWith(TestSink.probe[Seq[Long]])
         .request(1)
         .expectNext() shouldBe List(201l, 201l)

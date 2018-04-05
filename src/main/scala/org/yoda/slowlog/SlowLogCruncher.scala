@@ -28,7 +28,7 @@ object SlowLogCruncher {
 
         Map("timestamp" -> queriedTime.toDateTime(DateTimeZone.UTC).toString, "node" -> p.group(2),
           "index" -> p.group(3), "shard_id" -> p.group(4), "latency" -> p.group(5).toLong, "search_type" -> p.group(6),
-          "total_shards" -> p.group(7),
+          "total_shards" -> p.group(7).toLong,
           "query" -> query.toJSON,
           "size" -> rawQuery.size,
           "signature" -> getQuerySignature(rawQuery),

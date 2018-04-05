@@ -36,7 +36,7 @@ val commonDeps = Seq(
 
 libraryDependencies ++= akkaDeps ++ commonDeps
 
-mainClass in(Compile, run) := Some("org.yoda.Main")
+mainClass in(Compile, run) := Some("org.yoda.DiagnosticsApp")
 
 logBuffered in Test := false
 

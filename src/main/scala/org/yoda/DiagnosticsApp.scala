@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
 
 case class Config(slowLogLocation: String = "", esBaseUrl: String = "", timeZone: String = "PST8PDT")
 
-object Main extends App {
+object DiagnosticsApp extends App {
 
   override def main(args: Array[String]): Unit = {
     val EmbeddedESPort = 6393

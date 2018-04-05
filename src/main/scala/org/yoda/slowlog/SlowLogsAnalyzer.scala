@@ -3,12 +3,13 @@ package org.yoda.slowlog
 import java.io.File
 
 import akka.stream.scaladsl.{Sink, Source}
-import org.yoda.Commons._
-import org.yoda.es.ESInsert
 import org.slf4j.LoggerFactory
+import org.yoda.Commons._
+import org.yoda.es.ESClient
+import org.yoda.slowlog.JsonSupport.EnrichedMap
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 object SlowLogsAnalyzer {
   private val logger = LoggerFactory.getLogger(getClass)
@@ -17,16 +18,21 @@ object SlowLogsAnalyzer {
     (res, lst) => (res._1 + lst.size, res._2 + lst.count(_ / 100 != 2l))
   }
 
-  def analyze(tz: String, slowLogFile: String, esEndpoint: String): Future[(Long, Long)] = {
-    ingestCrunchedSlowLog(tz, slowLogFile, esEndpoint)
+  def analyze(tz: String, slowLogFile: String, esEndpoint: String) = {
+    val f = ingestCrunchedSlowLog(tz, slowLogFile, esEndpoint)
+    f.foreach { _ => querySlowLog(esEndpoint, "slowlog").foreach(_.foreach(println)) }
+    f
   }
 
-  def ingestCrunchedSlowLog(tz: String, slowLogFile: String, esEndpoint: String) =
+  def ingestCrunchedSlowLog(tz: String, slowLogFile: String, esEndpoint: String): Future[(Long, Long)] =
     Source
       .fromIterator(() => scala.io.Source.fromFile(new File(slowLogFile)).getLines())
       .via(SlowLogCruncher.crunchData(tz))
-      .groupedWithin(1000, 1 second)
-      .via(ESInsert.insertJSON(esEndpoint))
+      .via(ESClient.insertData(esEndpoint))
       .runWith(sink)
 
+  def querySlowLog(esEndpoint: String, indexName: String): Future[List[String]] = {
+    val query = """{"sort" : [{ "latency":"desc"}, {"aggregation_levels":"desc"}, {"timerange":"desc"}, {"total_shards":"desc"}]}"""
+    ESClient.queryData(esEndpoint, indexName, query).map(_.map(_.toJSON))
+  }
 }
