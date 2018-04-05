@@ -13,13 +13,11 @@ import scala.concurrent.duration._
 object SlowLogsAnalyzer {
   private val logger = LoggerFactory.getLogger(getClass)
 
-  private val FallBackEndpoint = "http://localhost:6393"
-
   private val sink = Sink.fold[(Long, Long), List[Long]]((0l, 0l)) {
     (res, lst) => (res._1 + lst.size, res._2 + lst.count(_ / 100 != 2l))
   }
 
-  def analyze(tz: String, slowLogFile: String, esEndpoint: String = FallBackEndpoint): Future[(Long, Long)] = {
+  def analyze(tz: String, slowLogFile: String, esEndpoint: String): Future[(Long, Long)] = {
     ingestCrunchedSlowLog(tz, slowLogFile, esEndpoint)
   }
 

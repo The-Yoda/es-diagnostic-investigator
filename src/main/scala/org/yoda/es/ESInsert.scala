@@ -11,6 +11,7 @@ import org.yoda.slowlog.GenericTypes.MAP
 import org.yoda.slowlog.JsonSupport.EnrichedMap
 
 import scala.concurrent.Future
+import scala.util.hashing.MurmurHash3.stringHash
 
 object ESInsert {
 
@@ -35,6 +36,11 @@ object ESInsert {
   private def parseESResponse(resp: MAP): List[Long] =
     resp("items").asInstanceOf[List[MAP]].map(_ ("index").asInstanceOf[MAP]("status").asInstanceOf[Long])
 
-  private def createRequest(data: MAP): Array[Byte] =
-    (Map("index" -> Map("_index" -> "slowlog", "_type" -> "log")).toJSON + "\n" + data.toJSON + "\n").getBytes
+  val NL = "\n"
+
+  private def createRequest(data: MAP): Array[Byte] = {
+    val jData = data.toJSON
+    val metadata = Map("index" -> Map("_index" -> "slowlog", "_type" -> "log", "_id" -> stringHash(jData))).toJSON
+    s"""$metadata$NL$jData$NL""".getBytes
+  }
 }

@@ -1,7 +1,7 @@
 name := "es-diagnostics-investigator"
 
 scalaVersion := "2.12.4"
-version := "0.0.2"
+version := "0.0.3-SNAPSHOT"
 
 val akkaVersion = "2.5.11"
 val akkaOrg = "com.typesafe.akka"

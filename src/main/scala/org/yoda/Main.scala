@@ -31,7 +31,7 @@ object Main extends App {
       }
 
       analyzed.onComplete { _ =>
-        stopEmbeddedElasticSearch(EmbeddedESPort)
+        if (useEmbeddedES) stopEmbeddedElasticSearch(EmbeddedESPort)
         Commons.system.terminate()
       }
 
