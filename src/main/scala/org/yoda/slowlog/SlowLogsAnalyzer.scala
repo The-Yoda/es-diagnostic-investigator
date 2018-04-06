@@ -18,15 +18,15 @@ object SlowLogsAnalyzer {
     (res, lst) => (res._1 + lst.size, res._2 + lst.count(_ / 100 != 2l))
   }
 
-  def analyze(tz: String, slowLogFile: String, esEndpoint: String) = {
-    val f = ingestCrunchedSlowLog(tz, slowLogFile, esEndpoint)
+  def analyze(tz: String, slowLog: File, esEndpoint: String) = {
+    val f = ingestCrunchedSlowLog(tz, slowLog, esEndpoint)
     f.foreach { _ => querySlowLog(esEndpoint, "slowlog").foreach(_.foreach(println)) }
     f
   }
 
-  def ingestCrunchedSlowLog(tz: String, slowLogFile: String, esEndpoint: String): Future[(Long, Long)] =
+  def ingestCrunchedSlowLog(tz: String, slowLog: File, esEndpoint: String): Future[(Long, Long)] =
     Source
-      .fromIterator(() => scala.io.Source.fromFile(new File(slowLogFile)).getLines())
+      .fromIterator(() => scala.io.Source.fromFile(slowLog).getLines())
       .via(SlowLogCruncher.crunchData(tz))
       .via(ESClient.insertData(esEndpoint))
       .runWith(sink)

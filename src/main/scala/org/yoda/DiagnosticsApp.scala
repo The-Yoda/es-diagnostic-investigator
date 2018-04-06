@@ -1,5 +1,7 @@
 package org.yoda
 
+import java.io.File
+
 import org.yoda.es.ElasticsearchClient._
 import org.yoda.slowlog.SlowLogsAnalyzer
 
@@ -8,7 +10,8 @@ import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
 
-case class Config(slowLogLocation: String = "", esBaseUrl: String = "", timeZone: String = "PST8PDT")
+case class Config(slowLog: File = new File("."), esBaseUrl: String = "", timeZone: String = "PST8PDT",
+                  outPutMode: String = "file", out: Option[File] = None)
 
 object DiagnosticsApp extends App {
 
@@ -16,14 +19,14 @@ object DiagnosticsApp extends App {
     val EmbeddedESPort = 6393
     val EmbeddedESUrl = s"http://localhost:$EmbeddedESPort"
     try {
-      val config = ArgParser.parse(args)
+      val config = ArgsParser.parse(args)
 
       val useEmbeddedES = config.esBaseUrl.isEmpty
       val esBaseUrl = if (useEmbeddedES) EmbeddedESUrl else config.esBaseUrl
 
       if (useEmbeddedES) startEmbeddedElasticSearch(EmbeddedESPort)
 
-      val analyzed = SlowLogsAnalyzer.analyze(config.timeZone, config.slowLogLocation, esBaseUrl)
+      val analyzed = SlowLogsAnalyzer.analyze(config.timeZone, config.slowLog, esBaseUrl)
 
       analyzed.onComplete {
         case Success(res) => println(res)
